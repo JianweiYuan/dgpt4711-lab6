@@ -1,5 +1,12 @@
 <?php
 namespace App\Models\Simple;
+use App\Models\Simple\CSVModel;
+class Places extends CSVModel
+{
+    protected $origin = WRITEPATH .'data/PlaceDate.csv';
+     protected $keyField = 'id';
+      protected $validationRules= [];
+}
 
 /**
  * SimpleModel persisted as CSV document
