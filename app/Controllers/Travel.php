@@ -57,9 +57,39 @@ class Travel extends BaseController {
         // get a template parser
         $parser = \Config\Services::parser();
         // tell it about the substitions 
-        return $parser->setData($record)
+        /*return $parser->setData($record)
                         // and have it render the template with those 
                         ->render('oneplace');
+         * 
+         */
+          $table = new \CodeIgniter\View\Table();
+              $headings = $places->fields;
+              $table->addRow($headings[0],$record['id'])
+                      ->addRow($headings[1],$record['name'])
+                      ->addRow($headings[2],$record['description'])
+                      ->addRow($headings[3],$record['link'])
+                      ->addRow($headings[4],"<img src=\"/image/".$record['image']."\"/>");
+           $template = [
+        'table_open' => '<table cellpadding="5px">',
+        'cell_start' => '<td style="border: 1px solid #dddddd;">',
+        'row_alt_start' => '<tr style="background-color:#dddddd">',
+     ];   
+              $table->setTemplate($template);
+              
+                  $fields = [
+         'title' => 'Travel Destinations',
+         'heading' => 'Travel Destinations',
+         'footer' => 'Jianwei Yuan'
+         ];
+      // tell it about the substitions
+  /* return $parser->setData($record)
+      // and have it render the template with those
+      ->render('oneplace');*/
+return $parser->setData($fields)
+               ->render('templates\top') .
+       $table->generate() .
+        $parser->setData($fields)
+               ->render('templates\bottom');
     }
 
 }
